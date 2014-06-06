@@ -11,7 +11,8 @@ def build_empty_list():
 
 @pytest.fixture(scope='function')
 def build_populated_list():
-    item5 = node(1, None)
+    item6 = node()
+    item5 = node(1, item6)
     item4 = node('dog', item5)
     item3 = node(45, item4)
     item2 = node('octopus', item3)
@@ -23,19 +24,18 @@ def build_populated_list():
 
 def test_linked_list(build_empty_list):
     empty_list = build_empty_list
-    assert empty_list.head is None
+    assert empty_list.head.value is None
 
 
 def test_insert(build_empty_list, build_populated_list):
-    empty_list = build_empty_list
+    empty_list = linked_list()
     populated_list, item1, item2, item3, item4, item5 = build_populated_list
-    new_item = node('new', None)
-    empty_list.insert(new_item)
-    assert new_item.next_node is None
-    assert empty_list.head == new_item
-    populated_list.insert(new_item)
-    assert new_item.next_node == item1
-    assert populated_list.head == new_item
+    empty_list.insert('new')
+    assert empty_list.head.next_node.value is None
+    assert empty_list.head.value == 'new'
+    populated_list.insert('new')
+    assert populated_list.head.next_node.value == item1.value
+    assert populated_list.head.value == 'new'
 
 
 def test_pop(build_empty_list, build_populated_list):
@@ -45,14 +45,14 @@ def test_pop(build_empty_list, build_populated_list):
     actual_populated = populated_list.head.value
     expected_populated = item1.value
     assert actual_populated == expected_populated
-    assert populated_list.head == item2
+    assert populated_list.head == item1
 
 
 def test_size(build_empty_list, build_populated_list):
     empty_list = build_empty_list
     populated_list, item1, item2, item3, item4, item5 = build_populated_list
-    assert empty_list.size() == 0
-    assert populated_list.size() == 5
+    assert empty_list.size() == 1
+    assert populated_list.size() == 6
 
 
 def test_search(build_empty_list, build_populated_list):
@@ -67,9 +67,12 @@ def test_search(build_empty_list, build_populated_list):
 
 def test_remove(build_populated_list):
     populated_list, item1, item2, item3, item4, item5 = build_populated_list
-    assert populated_list.remove(item1).search(item1) is None
-    assert populated_list.remove(item3).search(item3) is None
-    assert populated_list.remove(item5).search(item5) is None
+    populated_list.remove(item1)
+    populated_list.remove(item3)
+    populated_list.remove(item5)
+    assert populated_list.search(item1.value) is None
+    assert populated_list.search(item3.value) is None
+    assert populated_list.search(item5.value) is None
 
 
 def test_print(build_empty_list, build_populated_list):
