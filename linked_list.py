@@ -10,8 +10,6 @@ class linked_list():
 
     def insert(self, val):
         if self.head.value is not None:
-            # new_node = node(self.head.value, self.head.next_node)
-            # self.head.next_node = self.head
             new_node = node(val, self.head)
             self.head = new_node
         else:
