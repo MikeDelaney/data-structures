@@ -1,12 +1,12 @@
 import pytest
 from stack import Stack
-from stack import node
+from stack import Node
 
 
 @pytest.fixture(scope="function")
 def init_test_stack():
-    node1 = node(1, None)
-    node2 = node(2, node1)
+    node1 = Node(1, None)
+    node2 = Node(2, node1)
     stack = Stack()
     stack.head = node2
     return stack, node1, node2
