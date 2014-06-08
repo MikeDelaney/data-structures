@@ -3,15 +3,13 @@ from stack import Stack
 from stack import node
 
 
-stack = None
-node1 = None
-node2 = None
 @pytest.fixture(scope="function")
 def init_test_stack():
     node1 = node(1, None)
     node2 = node(2, node1)
     stack = Stack()
     stack.head = node2
+    return stack, node1, node2
 
 
 def test_new_stack():
@@ -27,6 +25,7 @@ def test_stack_push_empty():
 
 
 def test_stack_push(init_test_stack):
+    stack, node1, node2 = init_test_stack
     previous_head = stack.head
     stack.push(3)
     assert stack.head.value == 3
@@ -35,17 +34,20 @@ def test_stack_push(init_test_stack):
 
 
 def test_stack_pop(init_test_stack):
+    stack, node1, node2 = init_test_stack
     assert stack.pop() == 2
     assert stack.head is node1
 
 
 def test_stack_pop_head(init_test_stack):
+    stack, node1, node2 = init_test_stack
     stack.pop()
     stack.pop()
     assert stack.head is None
 
 
 def test_stack_pop_empty(init_test_stack):
+    stack, node1, node2 = init_test_stack
     stack.pop()
     stack.pop()
     try:
