@@ -46,17 +46,7 @@ def test_stack_pop_head(init_test_stack):
     assert stack.head is None
 
 
-def test_stack_pop_empty(init_test_stack):
-    stack, node1, node2 = init_test_stack
-    stack.pop()
-    stack.pop()
-    try:
-        stack.pop()
-    except LookupError:
-        pass
-    except Exception:
-        raise AssertionError("Exception other than LookupError raised")
-    else:
-        raise AssertionError(
-            "No exception raised when popping from an empty stack"
-        )
+def test_stack_pop_empty():
+    with pytest.raises(LookupError):
+        new_stack = Stack()
+        new_stack.pop()
