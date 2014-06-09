@@ -9,7 +9,12 @@ def test_enqueue_empty():
     and the front of the queue. It should also not
     reference any other node
     """
-    pass
+    queue = Queue()
+    queue.enqueue(500)
+    assert queue.back.value == 500
+    assert queue.back.next is None
+    assert queue.front.value == 500
+    assert queue.next is None
 
 
 def test_enqueue():
@@ -19,7 +24,14 @@ def test_enqueue():
     there it should become the back of the queue
     and the previous tail will reference the new tail
     """
-    pass
+    queue = Queue()
+    queue.enqueue(500)
+    old_back = queue.back
+    queue.enqueue(600)
+    assert queue.back is old_back.next
+    assert queue.back.next is None
+    assert queue.back.value == 600
+    assert old_back.value == 500
 
 
 def test_dequeue():
@@ -27,7 +39,13 @@ def test_dequeue():
     When an item is removed from the queue, it's value
     should be returned
     """
-    pass
+    queue = Queue()
+    queue.enqueue(500)
+    queue.enqueue(600)
+    queue.enqueue(700)
+    assert queue.dequeue() == 700
+    assert queue.dequeue() == 600
+    assert queue.dequeue() == 500
 
 
 def test_dequeue_empty():
