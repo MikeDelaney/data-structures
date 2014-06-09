@@ -23,4 +23,9 @@ class Queue():
         return retval
 
     def size(self):
-        pass
+        size = 0
+        current = self.head
+        while current is not None:
+            size += 1
+            current = current.next_node
+        return size
