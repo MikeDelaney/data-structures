@@ -1,15 +1,26 @@
 class Node():
-    def __init__(self, val=None, next_node=None):
+    def __init__(self, val=None):
         self.value = val
-        self.next_node = next_node
+        self.next_node = None
 
 
 class Queue():
+    def __init__(self):
+        self.head = None
+        self.back = Node()
+
     def enqueue(self, value):
-        pass
+        self.back.next_node = Node(value)
+        self.back = self.back.next_node
+        if self.head is None:
+            self.head = self.back
 
     def dequeue(self):
-        pass
+        if self.head is None:
+            raise LookupError
+        retval = self.head.value
+        self.head = self.head.next_node
+        return retval
 
     def size(self):
         pass

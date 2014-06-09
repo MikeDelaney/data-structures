@@ -6,7 +6,7 @@ def test_node():
     """
     Ensure Node() is correctly constructed
     """
-    node = Node(500, None)
+    node = Node(500)
     assert node.value == 500
     assert node.next_node is None
 
@@ -22,8 +22,8 @@ def test_enqueue_empty():
     queue.enqueue(500)
     assert queue.back.value == 500
     assert queue.back.next_node is None
-    assert queue.front.value == 500
-    assert queue.next_node is None
+    assert queue.head.value == 500
+    assert queue.head.next_node is None
 
 
 def test_enqueue():
@@ -52,9 +52,9 @@ def test_dequeue():
     queue.enqueue(500)
     queue.enqueue(600)
     queue.enqueue(700)
-    assert queue.dequeue() == 700
-    assert queue.dequeue() == 600
     assert queue.dequeue() == 500
+    assert queue.dequeue() == 600
+    assert queue.dequeue() == 700
 
 
 def test_dequeue_empty():
