@@ -2,6 +2,15 @@ import pytest
 from queue import Queue, Node
 
 
+def test_node():
+    """
+    Ensure Node() is correctly constructed
+    """
+    node = Node(500, None)
+    assert node.value == 500
+    assert node.next_node is None
+
+
 def test_enqueue_empty():
     """
     If a node is added to the back of the queue
@@ -12,9 +21,9 @@ def test_enqueue_empty():
     queue = Queue()
     queue.enqueue(500)
     assert queue.back.value == 500
-    assert queue.back.next is None
+    assert queue.back.next_node is None
     assert queue.front.value == 500
-    assert queue.next is None
+    assert queue.next_node is None
 
 
 def test_enqueue():
@@ -28,8 +37,8 @@ def test_enqueue():
     queue.enqueue(500)
     old_back = queue.back
     queue.enqueue(600)
-    assert queue.back is old_back.next
-    assert queue.back.next is None
+    assert queue.back is old_back.next_node
+    assert queue.back.next_node is None
     assert queue.back.value == 600
     assert old_back.value == 500
 
@@ -53,18 +62,25 @@ def test_dequeue_empty():
     If an attempt is made to remove and item from an empty
     queue, an error should be raised
     """
-    pass
+    queue = Queue()
+    with pytest.raises(LookupError):
+        queue.dequeue()
 
 
 def test_size():
     """
     The size of the queue should be accurately pollable
     """
-    pass
+    queue = Queue()
+    queue.enqueue(500)
+    queue.enqueue(600)
+    queue.enqueue(700)
+    assert queue.size() == 3
 
 
 def test_size_empty():
     """
     The size of an empty queue should be zero
     """
-    pass
+    queue = Queue()
+    assert queue.size() == 0
