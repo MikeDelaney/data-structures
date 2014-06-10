@@ -81,3 +81,53 @@ def test_shift():
     dll.append(600)
     assert dll.shift() == 600
     assert dll.tail.next_node is None
+
+
+def test_remove_empty():
+    dll = Dll()
+    with pytest.raises(LookupError):
+        dll.remove(500)
+
+
+def test_remove_not_found():
+    dll = Dll()
+    dll.append(600)
+    dll.insert(700)
+    with pytest.raises(LookupError):
+        dll.remove(500)
+
+
+def test_remove_head():
+    dll = Dll()
+    dll.append(500)
+    dll.append(600)
+    dll.append(700)
+    dll.remove(500)
+    assert dll.head.value == 600
+    assert dll.head.next_node is dll.tail
+    assert dll.head.prev is None
+
+
+def test_remove_tail():
+    dll = Dll()
+    dll.insert(500)
+    dll.insert(600)
+    dll.insert(700)
+    dll.remove(500)
+    assert dll.tail.value == 600
+    assert dll.tail.prev is dll.head
+    assert dll.tail.next_node is None
+
+
+def test_remove():
+    dll = Dll()
+    dll.insert(500)
+    dll.insert(600)
+    back = dll.head
+    dll.insert(700)
+    dll.insert(800)
+    front = dll.head
+    dll.insert(900)
+    dll.remove(700)
+    assert back.prev is front
+    assert front.next_node is back
