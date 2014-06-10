@@ -32,7 +32,29 @@ class Dll(object):
         return retval
 
     def shift(self):
-        pass
+        if self.tail is None:
+            raise LookupError
+        retval = self.tail.value
+        self.tail = self.tail.prev
+        self.tail.next_node = None
+        return retval
 
     def remove(self, val):
-        pass
+        if self.head is None:
+            raise LookupError
+        if self.head.value == val:
+            self.head = self.head.next_node
+            self.head.prev = None
+            return
+        current = self.head.next_node
+        while current.next_node is not None:
+            if current.value == val:
+                current.prev.next_node = current.next_node
+                current.next_node.prev = current.prev
+                return
+            current = current.next_node
+        if self.tail.value == val:
+            self.tail = self.tail.prev
+            self.tail.next_node = None
+        else:
+            raise LookupError
