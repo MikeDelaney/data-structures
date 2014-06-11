@@ -60,3 +60,19 @@ def test_heapify_max(init_list):
     heap = binheap(minmax="max")
     heap.append(raw)
     assert heap._heapify() == max_heap
+
+
+def test_push_min(init_list):
+    raw, min_heap, max_heap = init_list
+    heap = binheap(minmax="min")
+    for n in raw:
+        heap.push(n)
+    assert heap == min_heap
+
+
+def test_push_max(init_list):
+    raw, min_heap, max_heap = init_list
+    heap = binheap(minmax="max")
+    for n in raw:
+        heap.push(n)
+    assert heap == max_heap
