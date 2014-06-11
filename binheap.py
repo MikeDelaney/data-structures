@@ -2,17 +2,17 @@
 
 
 class binheap(list):
+    def __init__(self, init=None, minmax="min"):
+        if minmax == "min":
+            self.compare = self.comp_min
+        else:
+            self.compare = self.comp_max
+
     def comp_min(self, x, y):
         pass
 
     def comp_max(self, x, y):
         pass
-
-    def __init(self, init, minmax="min"):
-        if minmax == "min":
-            self.compare = binheap.comp_min
-        else:
-            self.compare = binheap.comp_max
 
     def heapify(self):
         pass
