@@ -76,3 +76,17 @@ def test_push_max(init_list):
     for n in raw:
         heap.push(n)
     assert heap == max_heap
+
+
+def test_pop_min(init_list):
+    raw, min_heap, max_heap = init_list
+    heap = binheap(raw, minmax="min")
+    heap.pop()
+    assert heap == [-3, 1, 7, 5]
+
+
+def test_pop_max(init_list):
+    raw, min_heap, max_heap = init_list
+    heap = binheap(raw, minmax="max")
+    heap.pop()
+    assert heap == [5, 1, -3, -9]
