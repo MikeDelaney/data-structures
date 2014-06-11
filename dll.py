@@ -1,13 +1,23 @@
 class Node(object):
+    """
+    Represents a node with a pointer to previous node, a value, and a pointer
+    to next node.
+    """
     def __init__(self, prev=None, val=None, next_node=None):
         self.prev, self.value, self.next_node = prev, val, next_node
 
 
 class Dll(object):
+    """
+    Represents a doubly linked list with a head and a tail (initially empty)
+    """
     def __init__(self, head=None, tail=None):
         self.tail = self.head = None
 
     def insert(self, value):
+        """
+        Inserts a new node at the head of the list.
+        """
         if self.head is None:
             self.head = self.tail = Node(val=value)
         else:
@@ -16,6 +26,9 @@ class Dll(object):
             self.head = new_node
 
     def append(self, value):
+        """
+        Adds a new node to the tail of the list
+        """
         if self.tail is None:
             self.tail = self.head = Node(val=value)
         else:
@@ -24,6 +37,9 @@ class Dll(object):
             self.tail = new_node
 
     def pop(self):
+        """
+        Removes the item at the head of the list and returns its value.
+        """
         if self.head is None:
             raise LookupError
         retval = self.head.value
@@ -32,6 +48,9 @@ class Dll(object):
         return retval
 
     def shift(self):
+        """
+        Removes the item at the tail of the list and returns its value.
+        """
         if self.tail is None:
             raise LookupError
         retval = self.tail.value
@@ -40,21 +59,21 @@ class Dll(object):
         return retval
 
     def remove(self, val):
-        if self.head is None:
-            raise LookupError
-        if self.head.value == val:
-            self.head = self.head.next_node
-            self.head.prev = None
-            return
-        current = self.head.next_node
-        while current.next_node is not None:
+        """
+        Removes the first item in the list with the given value; otherwise
+        raises LookupError
+        """
+        current = self.head
+        while current is not None:
             if current.value == val:
-                current.prev.next_node = current.next_node
-                current.next_node.prev = current.prev
+                if current.prev is not None:
+                    current.prev.next_node = current.next_node
+                else:
+                    self.head = current.next_node
+                if current.next_node is not None:
+                    current.next_node.prev = current.prev
+                else:
+                    self.tail = current.prev
                 return
             current = current.next_node
-        if self.tail.value == val:
-            self.tail = self.tail.prev
-            self.tail.next_node = None
-        else:
-            raise LookupError
+        raise LookupError
