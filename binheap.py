@@ -18,7 +18,7 @@ class Binheap(object):
         else:
             self.minmax = "max"
             self.compare = self.comp_max
-        self._build()
+        self._heapify()
 
     def comp_min(self, x, y):
         """
@@ -32,37 +32,37 @@ class Binheap(object):
         """
         return x > y
 
-    def _build(self):
+    def _heapify(self):
         """
         Traverses levels of heap. Sends parent 'nodes' to _heapify.
         """
         for index in range(len(self._list)//2, -1, -1):
-            self._heapify(index)
+            self._heapify_sub(index)
 
-    def _heapify(self, index):
+    def _heapify_sub(self, index):
         """
         Heapifies a single subtree.
         """
         left = 2 * index + 1
         right = 2 * index + 2
         target = index
-        if left <= len(self._list)-1:
+        if left < len(self._list):
             if self.compare(self._list[left], self._list[target]):
                 target = left
-        if right <= len(self._list)-1:
+        if right < len(self._list):
             if self.compare(self._list[right], self._list[target]):
                 target = right
         if target != index:
             self._list[index], self._list[target] = (
                 self._list[target], self._list[index])
-            self._heapify(target)
+            self._heapify_sub(target)
 
     def push(self, value):
         """
         Adds value to end of heap and heapifies the tree.
         """
         self._list.append(value)
-        self._build()
+        self._heapify()
 
     def pop(self):
         """

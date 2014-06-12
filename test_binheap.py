@@ -52,7 +52,7 @@ def test_heapify_min(init_list):
     raw, min_heap, max_heap = init_list
     heap = Binheap(minmax="min")
     heap._list.extend(raw)
-    heap._build()
+    heap._heapify()
     assert heap._list == min_heap
 
 
@@ -60,7 +60,7 @@ def test_heapify_max(init_list):
     raw, min_heap, max_heap = init_list
     heap = Binheap(minmax="max")
     heap._list.extend(raw)
-    heap._build()
+    heap._heapify()
     assert heap._list == max_heap
 
 
