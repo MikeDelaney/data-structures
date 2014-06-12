@@ -7,11 +7,8 @@ from priorityq import Item
 
 @pytest.fixture(scope="function")
 def init_list():
-    raw = [Item(1, 500), Item(-3, u"Bob"), Item(5, u"Fred"),
-           Item(7, 600), Item(-9, 700)]
-    min_heap = [-9, -3, 5, 7, 1]
-    max_heap = [7, 1, 5, -3, -9]
-    return raw, min_heap, max_heap
+    return [Item(1, 500), Item(-3, u"Bob"), Item(5, u"Fred"),
+            Item(7, 600), Item(-9, 700)]
 
 
 def test_init_item_defaults():
@@ -38,8 +35,8 @@ def test_init_cmp():
 
 # [Item(1, 500), Item(-3, u"Bob"), Item(5, u"Fred"),
 #            Item(7, 600), Item(-9, 700)]
-def test_priorityq_pop(init_list):
-    raw, min_heap, max_heap = init_list
+def test_pop(init_list):
+    raw = init_list
     # not sure next line works!
     q = Priorityq(raw)
     q.pop()
@@ -53,7 +50,12 @@ def test_insert_empty():
 
 
 def test_insert(init_list):
-    raw, min_heap, max_heap = init_list
-    q = Priorityq(raw)
+    q = Priorityq(init_list)
     q.insert(3, u'dog')
     assert [x[0] for x in q] == [-9, -3, 3, 7, 1, 5]
+
+
+def test_peek(init_list):
+    q = Priorityq(init_list)
+    assert q.peek() == 700
+    assert [x[0] for x in q] == [-9, -3, 5, 7, 1]
