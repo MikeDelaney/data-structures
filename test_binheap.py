@@ -7,8 +7,8 @@ from binheap import binheap
 @pytest.fixture(scope="function")
 def init_list():
     raw = [1, -3, 5, 7, -9]
-    min_heap = [-9, -3, 5, 7, 1] #fix
-    max_heap = [7, 5, 1, -3, -9] # fix
+    min_heap = [-9, -3, 5, 7, 1]
+    max_heap = [7, 1, 5, -3, -9]
     return raw, min_heap, max_heap
 
 
@@ -52,7 +52,7 @@ def test_heapify_min(init_list):
     raw, min_heap, max_heap = init_list
     heap = binheap(minmax="min")
     heap.extend(raw)
-    heap._heapify()
+    heap._build()
     assert heap == min_heap
 
 
@@ -60,7 +60,7 @@ def test_heapify_max(init_list):
     raw, min_heap, max_heap = init_list
     heap = binheap(minmax="max")
     heap.extend(raw)
-    heap._heapify()
+    heap._build()
     assert heap == max_heap
 
 
