@@ -17,14 +17,21 @@ class binheap(list):
     def comp_max(self, x, y):
         return x > y
 
-    def _heapify(self):
-        # fix
-        from pdb import set_trace
-        #set_trace()
-        for index in range(len(self)-1, 0, -1):
-            parent = (index-1)//2
-            if self.compare(self[index], self[parent]):
-                self[index], self[parent] = self[parent], self[index]
+    def _build(self):
+        for index in range(len(self)//2, -1, -1):
+            self._heapify(index)
+
+    def _heapify(self, index):
+        left = 2 * index + 1
+        right = 2 * index + 2
+        target = index
+        if left <= len(self)-1 and self.compare(self[left], self[target]):
+            target = left
+        if right <= len(self)-1 and self.compare(self[right], self[target]):
+                target = right
+        if target != index:
+            self[index], self[target] = self[target], self[index]
+            self._heapify(target)
 
     def push(self, value):
         pass
