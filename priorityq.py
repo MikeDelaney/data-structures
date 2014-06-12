@@ -11,5 +11,13 @@ class Item(object):
     def __cmp__(self, other):
         return self.priority < other.priority
 
+
 class Priorityq(Binheap):
-    pass
+    def insert(self, priority, value):
+        self.push(Item(priority, value))
+
+    def pop(self):
+        pass
+
+    def peek(self):
+        pass
