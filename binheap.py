@@ -64,9 +64,6 @@ class Binheap(list):
         """
         Removes root of heap, replaces with last value, rebuilds tree.
         """
-        first = self[0]
-        last = self[-1]
-        self.remove(first)
-        self.insert(0, last)
-        del self[-1]
+        self[0] = self[-1]
+        super(Binheap, self).pop()
         self._heapify()

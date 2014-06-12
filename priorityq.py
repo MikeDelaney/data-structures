@@ -9,7 +9,12 @@ class Item(object):
         self.value = value
 
     def __cmp__(self, other):
-        return self.priority < other.priority
+        if self.priority > other.priority:
+            return 1
+        elif self.priority == other.priority:
+            return 0
+        else:
+            return -1
 
 
 class Priorityq(Binheap):
@@ -17,7 +22,7 @@ class Priorityq(Binheap):
         self.push(Item(priority, value))
 
     def pop(self):
-        pass
+        super(Priorityq, self).pop()
 
     def peek(self):
         pass
