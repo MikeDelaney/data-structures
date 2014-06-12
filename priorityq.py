@@ -25,4 +25,4 @@ class Priorityq(Binheap):
         super(Priorityq, self).pop()
 
     def peek(self):
-        pass
+        return self[0].value
