@@ -19,4 +19,8 @@ Got an idea for a doubly linked list use case from https://community.oracle.com/
 
 As singly linked list might be appropriate as the basis of a stack, and a doubly linked list might be useful to keep a record of commands for undo/redo.
 
+##Binary Heap - binheap.py
+
+##Priority Queue - priorityq.py
+
 ##Simple parenthesis counter - parenthetics.py
