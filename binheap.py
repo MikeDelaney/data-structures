@@ -1,7 +1,7 @@
 # -*- charset: utf-8 -*-
 
 
-class Binheap(object):
+class Binheap(list):
     """
     Represents a binary heap as a list created from iterable. If no iterable,
     creates empty heap. minmax allows creation of max-heap and
@@ -9,14 +9,10 @@ class Binheap(object):
     """
     def __init__(self, iterable=None, minmax="min"):
         if iterable is not None:
-            self._list = list(iterable)
-        else:
-            self._list = []
+            self.extend(iterable)
         if minmax == "min":
-            self.minmax = "min"
             self.compare = self.comp_min
         else:
-            self.minmax = "max"
             self.compare = self.comp_max
         self._heapify()
 
@@ -36,7 +32,7 @@ class Binheap(object):
         """
         Traverses levels of heap. Sends parent 'nodes' to _heapify.
         """
-        for index in range(len(self._list)//2, -1, -1):
+        for index in range(len(self)//2, -1, -1):
             self._heapify_sub(index)
 
     def _heapify_sub(self, index):
@@ -46,30 +42,31 @@ class Binheap(object):
         left = 2 * index + 1
         right = 2 * index + 2
         target = index
-        if left < len(self._list):
-            if self.compare(self._list[left], self._list[target]):
+        if left < len(self):
+            if self.compare(self[left], self[target]):
                 target = left
-        if right < len(self._list):
-            if self.compare(self._list[right], self._list[target]):
+        if right < len(self):
+            if self.compare(self[right], self[target]):
                 target = right
         if target != index:
-            self._list[index], self._list[target] = (
-                self._list[target], self._list[index])
+            self[index], self[target] = (
+                self[target], self[index])
             self._heapify_sub(target)
 
     def push(self, value):
         """
         Adds value to end of heap and heapifies the tree.
         """
-        self._list.append(value)
+        self.append(value)
         self._heapify()
 
     def pop(self):
         """
         Removes root of heap, replaces with last value, rebuilds tree.
         """
-        last = self._list.pop()
-        copy = self._list[1:]
-        copy.insert(0, last)
-        temp = Binheap(copy, self.minmax)
-        self._list = temp._list
+        first = self[0]
+        last = self[-1]
+        self.remove(first)
+        self.insert(0, last)
+        del self[-1]
+        self._heapify()
