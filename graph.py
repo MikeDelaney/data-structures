@@ -1,7 +1,7 @@
 # -*- charset: utf-8 -*-
 
 
-class Graph(dict):
+class Graph(object):
     def __init__(self):
         self.d = {}
 
@@ -13,3 +13,12 @@ class Graph(dict):
 
     def add_node(self, key):
         self.d[key] = []
+
+    def add_edge(self, key1, key2):
+        if key1 not in self.d:
+            self.d[key1] = []
+        if key2 not in self.d:
+            self.d[key2] = []
+        # there should not already be an edge from key1 to key2
+        if key2 not in self.d[key1]:
+            self.d[key1] = [key2]

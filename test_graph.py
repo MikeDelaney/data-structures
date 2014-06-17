@@ -30,3 +30,8 @@ def test_g_add_node():
     graph = Graph()
     graph.add_node('A')
     assert graph.d == {'A': []}
+
+def test_g_add_edge_dne():
+    graph = Graph()
+    graph.add_edge('A', 'B')
+    assert graph.d == {'A': ['B'], 'B': []}
