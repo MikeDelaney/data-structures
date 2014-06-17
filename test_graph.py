@@ -4,6 +4,11 @@ import pytest
 from graph import Graph
 
 
+def test_g_init():
+    graph = Graph()
+    assert graph.d == {}
+
+
 def test_g_nodes():
     graph = Graph()
     graph.d = {node: edges for (node, edges) in
