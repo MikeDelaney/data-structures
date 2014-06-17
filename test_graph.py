@@ -24,3 +24,9 @@ def test_g_edges():
                }
     edges = [e for n in graph.d for e in graph.d[n]]
     assert graph.edges() == edges
+
+
+def test_g_add_node():
+    graph = Graph()
+    graph.add_node('A')
+    assert graph.d == {'A': []}
