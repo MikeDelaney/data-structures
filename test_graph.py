@@ -89,3 +89,10 @@ def test_g_neighbors():
     graph.add_edge('B', 'A')
     graph.add_edge('A', 'B')
     assert graph.neighbors('A') == ['C', 'B']
+
+
+def test_adjacent_dne():
+    graph = Graph()
+    graph.add_node('A')
+    with pytest.raises(ValueError):
+        assert 
