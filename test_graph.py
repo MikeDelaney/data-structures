@@ -103,7 +103,7 @@ def test_adjacent():
     graph.add_node('A')
     graph.add_node('B')
     graph.add_edge('A', 'B')
-    assert graph.adjacent('B', 'A')
+    assert graph.adjacent('A', 'B')
 
 
 def test_not_adjacent():

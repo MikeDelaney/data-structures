@@ -39,3 +39,8 @@ class Graph(object):
         if not self.has_node(node):
             raise ValueError
         return self.d[node]
+
+    def adjacent(self, node, endpoint):
+        if not self.has_node(node) or not self.has_node(endpoint):
+            raise ValueError
+        return endpoint in self.d[node]
