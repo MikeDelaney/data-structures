@@ -42,3 +42,9 @@ def test_g_add_edge():
     graph.add_node('A')
     graph.add_node('B')
     graph.add_edge('A', 'B')
+
+
+def test_del_node_dne():
+    graph = Graph()
+    with pytest.raises(ValueError):
+        graph.del_node('A')

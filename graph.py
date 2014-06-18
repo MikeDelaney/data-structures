@@ -22,3 +22,11 @@ class Graph(object):
         # there should not already be an edge from key1 to key2
         if key2 not in self.d[key1]:
             self.d[key1] = [key2]
+
+    def del_node(self, key):
+        if key not in self.d:
+            raise ValueError
+        del self.d[key]
+        for edge in self.d.values():
+            if key in edge:
+                edge.remove[key]
