@@ -4,12 +4,12 @@ import pytest
 from graph import Graph
 
 
-def test_g_init():
+def test_init():
     graph = Graph()
     assert graph.d == {}
 
 
-def test_g_nodes():
+def test_nodes():
     graph = Graph()
     graph.d = {node: edges for (node, edges) in
                [(hashable, []) for hashable in range(10)]
@@ -17,7 +17,7 @@ def test_g_nodes():
     assert graph.nodes() == graph.d.keys()
 
 
-def test_g_edges():
+def test_edges():
     graph = Graph()
     graph.d = {node: edges for (node, edges) in
                [(hashable, range(10)) for hashable in range(10)]
@@ -26,38 +26,38 @@ def test_g_edges():
     assert graph.edges() == edges
 
 
-def test_g_add_node():
+def test_add_node():
     graph = Graph()
     graph.add_node('A')
     assert graph.d == {'A': []}
 
-def test_g_add_edge_dne():
+def test_add_edge_dne():
     graph = Graph()
     graph.add_edge('B', 'A')
     assert graph.d == {'A': [], 'B': ['A']}
 
 
-def test_g_add_edge():
+def test_add_edge():
     graph = Graph()
     graph.add_node('A')
     graph.add_node('B')
     graph.add_edge('A', 'B')
 
 
-def test_g_del_node_dne():
+def test_del_node_dne():
     graph = Graph()
     with pytest.raises(ValueError):
         graph.del_node('A')
 
 
-def test_g_del_node():
+def test_del_node():
     graph = Graph()
     graph.add_node('A')
     assert 'A' in graph.d
     graph.del_node('A')
     assert 'A' not in graph.d
 
-def test_g_del_node_edges():
+def test_del_node_edges():
     graph = Graph()
     graph.add_node('A')
     graph.add_node('B')
@@ -66,20 +66,20 @@ def test_g_del_node_edges():
     assert graph.d['A'] == []
 
 
-def test_g_has_node():
+def test_has_node():
     graph = Graph()
     graph.add_node('A')
     assert graph.has_node('A')
     assert graph.has_node('B') is False
 
 
-def test_g_neighbors_dne():
+def test_neighbors_dne():
     graph = Graph()
     with pytest.raises(ValueError):
         assert graph.neighbors('A') == []
 
 
-def test_g_neighbors():
+def test_neighbors():
     graph = Graph()
     graph.add_node('A')
     graph.add_node('B')
@@ -95,4 +95,19 @@ def test_adjacent_dne():
     graph = Graph()
     graph.add_node('A')
     with pytest.raises(ValueError):
-        raise ValueError
+        graph.adjacent('A', 'B')
+
+
+def test_adjacent():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_edge('A', 'B')
+    assert graph.adjacent('B', 'A')
+
+def test_not_adjacent():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_edge('A', 'B')
+    assert graph.adjacent('B', 'A')

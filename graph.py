@@ -1,5 +1,6 @@
 # -*- charset: utf-8 -*-
 
+
 class Graph(object):
     def __init__(self):
         self.d = {}
@@ -21,7 +22,7 @@ class Graph(object):
         # there should not already be an edge from node to endpoint
         # and nodes cannot make an edge to themselves
         if endpoint not in self.d[node] and node != endpoint:
-            self.d[node] = [endpoint]
+            self.d[node].append(endpoint)
 
     def del_node(self, node):
         if not self.has_node(node):
@@ -37,4 +38,4 @@ class Graph(object):
     def neighbors(self, node):
         if not self.has_node(node):
             raise ValueError
-        return [n for n in self.d if node in self.d[n]]
+        return self.d[node]
