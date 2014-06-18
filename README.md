@@ -24,3 +24,7 @@ As singly linked list might be appropriate as the basis of a stack, and a doubly
 ##Priority Queue - priorityq.py
 
 ##Simple parenthesis counter - parenthetics.py
+
+##Simple Graph - graph.py
+
+An implementation of a directional graph
