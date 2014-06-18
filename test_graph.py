@@ -85,10 +85,10 @@ def test_neighbors():
     graph.add_node('B')
     graph.add_node('C')
     graph.add_node('D')
-    graph.add_edge('C', 'A')
     graph.add_edge('B', 'A')
-    graph.add_edge('A', 'B')
-    assert graph.neighbors('A') == ['C', 'B']
+    graph.add_edge('B', 'C')
+    graph.add_edge('B', 'D')
+    assert graph.neighbors('B') == ['A', 'C', 'D']
 
 
 def test_adjacent_dne():
@@ -105,9 +105,11 @@ def test_adjacent():
     graph.add_edge('A', 'B')
     assert graph.adjacent('B', 'A')
 
+
 def test_not_adjacent():
     graph = Graph()
     graph.add_node('A')
     graph.add_node('B')
-    graph.add_edge('A', 'B')
-    assert graph.adjacent('B', 'A')
+    graph.add_node('C')
+    graph.add_edge('A', 'C')
+    assert not graph.adjacent('A', 'B')
