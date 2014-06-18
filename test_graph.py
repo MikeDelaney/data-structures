@@ -22,7 +22,7 @@ def test_g_edges():
     graph.d = {node: edges for (node, edges) in
                [(hashable, range(10)) for hashable in range(10)]
                }
-    edges = [e for n in graph.d for e in graph.d[n]]
+    edges = [(n, e) for n in graph.d for e in graph.d[n]]
     assert graph.edges() == edges
 
 
@@ -95,4 +95,4 @@ def test_adjacent_dne():
     graph = Graph()
     graph.add_node('A')
     with pytest.raises(ValueError):
-        assert 
+        raise ValueError
