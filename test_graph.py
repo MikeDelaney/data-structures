@@ -44,20 +44,20 @@ def test_g_add_edge():
     graph.add_edge('A', 'B')
 
 
-def test_del_node_dne():
+def test_g_del_node_dne():
     graph = Graph()
     with pytest.raises(ValueError):
         graph.del_node('A')
 
 
-def test_del_node():
+def test_g_del_node():
     graph = Graph()
     graph.add_node('A')
     assert 'A' in graph.d
     graph.del_node('A')
     assert 'A' not in graph.d
 
-def test_del_node_edges():
+def test_g_del_node_edges():
     graph = Graph()
     graph.add_node('A')
     graph.add_node('B')
@@ -66,8 +66,26 @@ def test_del_node_edges():
     assert graph.d['A'] == []
 
 
-def test_has_node():
+def test_g_has_node():
     graph = Graph()
     graph.add_node('A')
     assert graph.has_node('A')
     assert graph.has_node('B') is False
+
+
+def test_g_neighbors_dne():
+    graph = Graph()
+    with pytest.raises(ValueError):
+        assert graph.neighbors('A') == []
+
+
+def test_g_neighbors():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_node('C')
+    graph.add_node('D')
+    graph.add_edge('C', 'A')
+    graph.add_edge('B', 'A')
+    graph.add_edge('A', 'B')
+    assert graph.neighbors('A') == ['C', 'B']
