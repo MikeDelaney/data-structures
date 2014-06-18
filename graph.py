@@ -30,3 +30,6 @@ class Graph(object):
         for edge in self.d.values():
             if key in edge:
                 edge.remove(key)
+
+    def has_node(self, key):
+        return key in self.d

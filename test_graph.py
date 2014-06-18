@@ -64,3 +64,10 @@ def test_del_node_edges():
     graph.add_edge('A', 'B')
     graph.del_node('B')
     assert graph.d['A'] == []
+
+
+def test_has_node():
+    graph = Graph()
+    graph.add_node('A')
+    assert graph.has_node('A')
+    assert graph.has_node('B') is False
