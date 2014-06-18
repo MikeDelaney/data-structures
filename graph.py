@@ -29,4 +29,4 @@ class Graph(object):
         del self.d[key]
         for edge in self.d.values():
             if key in edge:
-                edge.remove[key]
+                edge.remove(key)

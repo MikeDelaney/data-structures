@@ -48,3 +48,19 @@ def test_del_node_dne():
     graph = Graph()
     with pytest.raises(ValueError):
         graph.del_node('A')
+
+
+def test_del_node():
+    graph = Graph()
+    graph.add_node('A')
+    assert 'A' in graph.d
+    graph.del_node('A')
+    assert 'A' not in graph.d
+
+def test_del_node_edges():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_edge('A', 'B')
+    graph.del_node('B')
+    assert graph.d['A'] == []
