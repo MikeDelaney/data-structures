@@ -121,3 +121,67 @@ def test_not_adjacent():
     graph.add_node('C')
     graph.add_edge('A', 'C')
     assert not graph.adjacent('A', 'B')
+
+def test_depth_first_non_cyclic_root():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_node('C')
+    graph.add_node('D')
+    graph.add_node('E')
+    graph.add_edge('A', 'B')
+    graph.add_edge('A', 'C')
+    graph.add_edge('C', 'D')
+    graph.add_edge('C', 'E')
+    assert depth_first('A') == [('A', 'B'), ('A', 'C'),
+                                ('C', 'D'), ('C', 'E')]
+
+
+def test_depth_first_non_cyclic_non_root():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_node('C')
+    graph.add_node('D')
+    graph.add_node('E')
+    graph.add_edge('A', 'B')
+    graph.add_edge('A', 'C')
+    graph.add_edge('C', 'D')
+    graph.add_edge('C', 'E')
+    assert depth_first('B') == []
+
+def test_depth_first_cyclic_root():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_node('C')
+    graph.add_node('D')
+    graph.add_node('E')
+    graph.add_edge('A', 'B')
+    graph.add_edge('A', 'C')
+    graph.add_edge('B', 'C')
+    graph.add_edge('C', 'D')
+    graph.add_edge('C', 'E')
+    graph.add_edge('E', 'B')
+    assert depth_first('A') == [('A', 'B'), ('A', 'C'),
+                                ('C', 'D'), ('C', 'E')]
+
+
+def test_depth_first_cyclic_non_root():
+    graph = Graph()
+    graph.add_node('A')
+    graph.add_node('B')
+    graph.add_node('C')
+    graph.add_node('D')
+    graph.add_node('E')
+    graph.add_edge('A', 'B')
+    graph.add_edge('A', 'C')
+    graph.add_edge('B', 'C')
+    graph.add_edge('C', 'D')
+    graph.add_edge('C', 'E')
+    graph.add_edge('E', 'B')
+    assert depth_first('B') == [('B', 'C'), ('C', 'D'), ('C', 'E')]
+
+
+def test_breadth_first_traversal():
+    pass
