@@ -35,7 +35,7 @@ def test_add_node():
 def test_add_node_errpr():
     graph = Graph()
     graph.add_node('A')
-    with pytest.raises(ValueError("Node already exists")):
+    with pytest.raises(ValueError):
         graph.add_node('A')
 
 
