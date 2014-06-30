@@ -31,6 +31,14 @@ def test_add_node():
     graph.add_node('A')
     assert graph.d == {'A': []}
 
+
+def test_add_node_errpr():
+    graph = Graph()
+    graph.add_node('A')
+    with pytest.raises(ValueError):
+        graph.add_node('A')
+
+
 def test_add_edge_dne():
     graph = Graph()
     graph.add_edge('B', 'A')

@@ -12,6 +12,8 @@ class Graph(object):
         return [(n, e) for n in self.d for e in self.d[n]]
 
     def add_node(self, node):
+        if self.has_node(node):
+            raise ValueError("Node already exists")
         self.d[node] = []
 
     def add_edge(self, node, endpoint):
