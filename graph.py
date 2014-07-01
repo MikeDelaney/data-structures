@@ -63,7 +63,7 @@ class Graph(object):
                 curr_node = not_explored.pop()
             visited.append(curr_node)
             children = self.d[curr_node]
-            if len(children) > 0:
+            if children:
                 for child in children:
                     if child not in visited and child not in not_explored:
                         if traversal == 'depth':
