@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MikeDelaney/data-structures.svg?branch=master)](https://travis-ci.org/MikeDelaney/data-structures)
+
 data-structures
 ===============
 
