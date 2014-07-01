@@ -53,22 +53,12 @@ class Graph(object):
         while not_explored:
             curr_node = not_explored.pop(0)
             visited.append(curr_node)
-            if len(self.d[curr_node]) > 0:
-                for item in self.d[curr_node]:
-                    if item not in visited and item not in not_explored:
-                        not_explored.append(item)
+            children = self.d[curr_node]
+            if len(children) > 0:
+                for child in children:
+                    if child not in visited and child not in not_explored:
+                        not_explored.append(child)
         return visited
-        #     if len(self.d[curr_node]) == 0:
-        #         # visited.append(curr_node)
-        #         pass
-        #     else:
-        #         # visited.append(curr_node)
-        #         for item in self.d[curr_node]:
-        #             if item not in visited:
-        #                 not_explored.append(item)
-        # return visited
-
-
 
     def breadth_first(self, start):
         pass
