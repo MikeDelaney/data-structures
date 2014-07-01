@@ -9,38 +9,34 @@ class Graph(object):
         return self.d.keys()
 
     def edges(self):
-        return [(n, e) for n in self.d for e in self.d[n]]
+        return [(n, e, self.d[n][e]) for n in self.d for e in self.d[n]]
 
     def add_node(self, node):
         if self.has_node(node):
             raise ValueError("Node already exists")
-        self.d[node] = []
+        self.d[node] = {}
 
-    def add_edge(self, node, endpoint):
+    def add_edge(self, node, endpoint, weight):
         if not self.has_node(node):
-            self.d[node] = []
+            self.d[node] = {}
         if not self.has_node(endpoint):
-            self.d[endpoint] = []
+            self.d[endpoint] = {}
         # there should not already be an edge from node to endpoint
         # and nodes cannot make an edge to themselves
         if endpoint not in self.d[node] and node != endpoint:
-            self.d[node].append(endpoint)
+            self.d[node][endpoint] = weight
 
     def del_node(self, node):
-        if not self.has_node(node):
-            raise ValueError
         del self.d[node]
-        for endpoints in self.d.values():
-            if node in endpoints:
-                endpoints.remove(node)
+        for nodes in self.d:
+            if node in self.d[nodes]:
+                del self.d[nodes][node]
 
     def has_node(self, node):
         return node in self.d
 
     def neighbors(self, node):
-        if not self.has_node(node):
-            raise ValueError
-        return self.d[node]
+        return sorted(self.d[node].keys())
 
     def adjacent(self, node, endpoint):
         if not self.has_node(node) or not self.has_node(endpoint):
