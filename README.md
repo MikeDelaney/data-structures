@@ -1,3 +1,5 @@
+https://travis-ci.org/MikeDelaney/data-structures.svg?branch=master
+
 data-structures
 ===============
 
