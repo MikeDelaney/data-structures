@@ -48,19 +48,27 @@ class Graph(object):
         return endpoint in self.d[node]
 
     def depth_first(self, start):
-        def traverse(parent, child):
-            path_list.append(child)
-            print 'parent' + str(parent)
-            print 'child' + str(child)
-            for c in self.d[child]:
-                traverse(child, c)
-            path_list.append(parent)
-            return
-        if len(self.d[start]) == 0:
-            return start
-        path_list = [start]
-        for c in self.d[start]:
-            traverse(start, c)
+        visited = []
+        not_explored = [start]
+        while not_explored:
+            curr_node = not_explored.pop(0)
+            visited.append(curr_node)
+            children = self.d[curr_node]
+            if len(children) > 0:
+                for child in children:
+                    if child not in visited and child not in not_explored:
+                        not_explored.append(child)
+        return visited
 
     def breadth_first(self, start):
-        pass
+        visited = []
+        not_explored = [start]
+        while not_explored:
+            curr_node = not_explored.pop()
+            visited.append(curr_node)
+            children = self.d[curr_node]
+            if len(children) > 0:
+                for child in children:
+                    if child not in visited and child not in not_explored:
+                        not_explored.insert(0, child)
+        return visited
