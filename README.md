@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MikeDelaney/data-structures.svg?branch=master)](https://travis-ci.org/MikeDelaney/data-structures)
+
 data-structures
 ===============
 
@@ -27,4 +29,5 @@ As singly linked list might be appropriate as the basis of a stack, and a doubly
 
 ##Simple Graph - graph.py
 
-An implementation of a directional graph
+An implementation of a directional graph that has methods to return complete traversals, either depth-first or breadth-first.
+
