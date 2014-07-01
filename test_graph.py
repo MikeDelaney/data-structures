@@ -134,7 +134,8 @@ def test_depth_first_non_cyclic_root():
     graph.add_edge('A', 'C')
     graph.add_edge('C', 'D')
     graph.add_edge('C', 'E')
-    assert graph.depth_first('A') == ['A', 'B', 'A', 'C', 'D', 'C', 'E']
+    # assert graph.depth_first('A') == ['A', 'B', 'A', 'C', 'D', 'C', 'E']
+    assert graph.depth_first('A') == ['A', 'B', 'C', 'D', 'E']
 
 
 def test_depth_first_non_cyclic_non_root():
@@ -148,7 +149,7 @@ def test_depth_first_non_cyclic_non_root():
     graph.add_edge('A', 'C')
     graph.add_edge('C', 'D')
     graph.add_edge('C', 'E')
-    assert graph.depth_first('B') == []
+    assert graph.depth_first('B') == ['B']
 
 
 def test_depth_first_cyclic_root():
@@ -164,7 +165,7 @@ def test_depth_first_cyclic_root():
     graph.add_edge('C', 'D')
     graph.add_edge('C', 'E')
     graph.add_edge('E', 'B')
-    assert graph.depth_first('A') == ['A', 'B', 'C', 'D', 'C', 'E']
+    assert graph.depth_first('A') == ['A', 'B', 'C', 'D', 'E']
 
 
 def test_depth_first_cyclic_non_root():
@@ -180,7 +181,9 @@ def test_depth_first_cyclic_non_root():
     graph.add_edge('C', 'D')
     graph.add_edge('C', 'E')
     graph.add_edge('E', 'B')
-    assert graph.depth_first('B') == ['B', 'C', 'D', 'C', 'E']
+    actual = graph.depth_first('B')
+    print 'actual is {}'.format(actual)
+    assert actual == ['B', 'C', 'D', 'E']
 
 
 def test_breadth_first_non_cyclic_root():
@@ -195,7 +198,7 @@ def test_breadth_first_non_cyclic_root():
     graph.add_edge('C', 'D')
     graph.add_edge('C', 'E')
     assert graph.breadth_first('A') == [('A', 'B'), ('B', 'C'),
-                                  ('C', 'D'), ('D', 'E')]
+                                        ('C', 'D'), ('D', 'E')]
 
 
 def test_breadth_first_non_cyclic_non_root():
