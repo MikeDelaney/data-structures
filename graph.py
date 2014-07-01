@@ -61,4 +61,14 @@ class Graph(object):
         return visited
 
     def breadth_first(self, start):
-        pass
+        visited = []
+        not_explored = [start]
+        while not_explored:
+            curr_node = not_explored.pop()
+            visited.append(curr_node)
+            children = self.d[curr_node]
+            if len(children) > 0:
+                for child in children:
+                    if child not in visited and child not in not_explored:
+                        not_explored.insert(0, child)
+        return visited
