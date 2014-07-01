@@ -27,4 +27,5 @@ As singly linked list might be appropriate as the basis of a stack, and a doubly
 
 ##Simple Graph - graph.py
 
-An implementation of a directional graph
+An implementation of a directional graph that has method to return complete traversals, either depth-first or breadth-first.
+
