@@ -37,13 +37,37 @@ def simple_cyclic():
 @pytest.fixture(scope="function")
 def complex_cyclic():
     graph = Graph()
-    graph.d = {'A': {'B': 1, 'C': 2},
+    graph.d = {'A': {'B': 1, 'C': 4},
                'B': {'C': 2, 'D': 4, 'E': 11},
                'C': {'F': 5, 'G': 3},
                'D': {},
                'E': {},
                'F': {'B': 8},
                'G': {}}
+    return graph
+
+
+@pytest.fixture(scope="function")
+def shortest_dead_end():
+    graph = Graph()
+    graph.d = {'A': {'B': 20, 'C': 3},
+               'B': {},
+               'C': {'D': 2, 'E': 1},
+               'D': {'F': 4},
+               'E': {},
+               'F': {'B': 5}}
+    return graph
+
+
+@pytest.fixture(scope="function")
+def shortest_wiki():
+    graph = Graph()
+    graph.d = {'A': {'B': 4, 'C': 2},
+               'B': {'C': 5, 'D': 10},
+               'C': {'E': 3},
+               'D': {'F': 11},
+               'E': {'D': 4},
+               'F': {}}
     return graph
 
 
@@ -190,3 +214,18 @@ def test_breadth_first_cyclic_non_root(complex_cyclic):
     graph = complex_cyclic
     for k in ['B', 'C', 'D', 'E', 'F', 'G']:
         assert k in graph.depth_first('B')
+
+
+def test_dijkstra_dead_end(shortest_dead_end):
+    graph = shortest_dead_end
+    assert graph.dijkstra('A', 'B') == ['A', 'C', 'D', 'F', 'B']
+
+
+def test_dijkstra_wiki_ex(shortest_wiki):
+    graph = shortest_wiki
+    assert graph.dijkstra('A', 'F') == ['A', 'C', 'E', 'D', 'F']
+
+
+def test_dijkstra_complex_cyclic(complex_cyclic):
+    graph = complex_cyclic
+    assert graph.dijkstra('A', 'G') == ['A', 'B', 'C', 'G']
