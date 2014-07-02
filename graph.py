@@ -67,3 +67,45 @@ class Graph(object):
                         else:
                             not_explored.insert(0, child)
         return visited
+
+
+    def dijkstra(self, start, end):
+        # Implementation is based on pseudocode from wikipedia
+        # Ugly but works
+        # dist maps node to (distance, previous node)
+        dist = {start: (0, None)}
+        shortest_path = [end]
+        # Get list of nodes
+        nodes = self.nodes()
+        # Iterate through nodes, add to dist with infinite distance and
+        # None for previous node
+        for node in nodes:
+            if node != start:
+                dist[node] = (float('inf'), None)
+        # While list of nodes is not empty
+        while nodes:
+            # Find the node in nodes with the min distance
+            closest_node = None
+            for node in nodes:
+                if node in dist:
+                    if closest_node is None:
+                        closest_node = node
+                    elif dist[node][0] < dist[closest_node][0]:
+                        closest_node = node
+            # Exit condition if there is no closest node
+            if closest_node is None:
+                break
+            # Remove closest_node from list
+            nodes.remove(closest_node)
+            # Iterate through neighbors of closest_node
+            # Add the node with shortest path to dist
+            for neighbor in self.neighbors(closest_node):
+                path_length = dist[closest_node][0] + \
+                    self.d[closest_node][neighbor]
+                if path_length < dist[neighbor][0]:
+                    dist[neighbor] = (path_length, closest_node)
+        # Backtrack from end through previous nodes to get path
+        while dist[end][1] is not None:
+            shortest_path.insert(0, dist[end][1])
+            end = dist[end][1]
+        return shortest_path
