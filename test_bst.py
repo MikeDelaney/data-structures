@@ -24,6 +24,8 @@ def test_insert():
     tree.insert(3)
     tree.insert(5)
     tree.insert(7)
+    tree.insert(8)
+    tree.insert(0)
     assert tree.key == 4
     assert tree.left.key == 2
     assert tree.right.key == 6
@@ -31,6 +33,8 @@ def test_insert():
     assert tree.left.right.key == 3
     assert tree.right.left.key == 5
     assert tree.right.right.key == 7
+    assert tree.right.right.right.key == 8
+    assert tree.left.left.left.key == 0
 
 
 def test_size():
