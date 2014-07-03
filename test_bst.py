@@ -37,6 +37,40 @@ def test_insert():
     assert tree.left.left.left.key == 0
 
 
+def test_contains_not_present():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(5)
+    tree.insert(7)
+    tree.insert(8)
+    tree.insert(0)
+    assert not tree.contains(56)
+
+
+def test_contains():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(5)
+    tree.insert(7)
+    tree.insert(8)
+    tree.insert(0)
+    assert tree.contains(1)
+    assert tree.contains(2)
+    assert tree.contains(3)
+    assert tree.contains(4)
+    assert tree.contains(5)
+    assert tree.contains(6)
+    assert tree.contains(7)
+    assert tree.contains(8)
+    assert tree.contains(0)
+
+
 def test_size():
     tree = BSTree(4)
     assert tree.size() == 1
