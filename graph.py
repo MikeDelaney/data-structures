@@ -68,7 +68,6 @@ class Graph(object):
                             not_explored.insert(0, child)
         return visited
 
-
     def dijkstra(self, start, end):
         # Implementation is based on pseudocode from wikipedia
         # Kind of ugly but works
@@ -103,6 +102,31 @@ class Graph(object):
                     self.d[closest_node][neighbor]
                 if path_length < dist[neighbor][0]:
                     dist[neighbor] = (path_length, closest_node)
+        return self._build_shortest_path(end, dist, shortest_path)
+
+    def bellman_ford(self, start, end):
+        dist = {start: (0, None)}
+        shortest_path = [end]
+        # Get list of nodes
+        nodes = self.nodes()
+        # Iterate through nodes, add to dist with infinite distance and
+        # None for previous node
+        for node in nodes:
+            if node != start:
+                dist[node] = (float('inf'), None)
+        # Relax edges
+        for i in xrange(1, len(nodes)):
+            # edge is (start_node, end_node, wt)
+            for edge in self.edges():
+                if dist[edge[0]][0] + edge[2] < dist[edge[1]][0]:
+                    dist[edge[1]] = (dist[edge[0]][0] + edge[2], edge[0])
+        # Check for negative cycles
+        for edge in self.edges():
+            if dist[edge[0]][0] + edge[2] < dist[edge[1]][0]:
+                raise Exception('Graph contains negative weight cycle')
+        return self._build_shortest_path(end, dist, shortest_path)
+
+    def _build_shortest_path(self, end, dist, shortest_path):
         # Backtrack from end through previous nodes to get path
         while dist[end][1] is not None:
             shortest_path.insert(0, dist[end][1])
