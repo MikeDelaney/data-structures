@@ -71,6 +71,17 @@ def shortest_wiki():
     return graph
 
 
+@pytest.fixture(scope="function")
+def neg_wt():
+    graph = Graph()
+    graph.d = {'A': {'B': -1, 'C': 4},
+               'B': {'C': 3, 'D': 2, 'E': 2},
+               'C': {},
+               'D': {'B': 1, 'C': 5},
+               'E': {'D': -3}}
+    return graph
+
+
 def test_init():
     graph = Graph()
     assert graph.d == {}
@@ -83,7 +94,6 @@ def test_nodes(simple_non_cylic):
 
 def test_edges(simple_non_cylic):
     graph = simple_non_cylic
-    # watch this one
     edges = [(n, e, graph.d[n][e]) for n in graph.d for e in graph.d[n]]
     assert graph.edges() == edges
 
@@ -229,3 +239,39 @@ def test_dijkstra_wiki_ex(shortest_wiki):
 def test_dijkstra_complex_cyclic(complex_cyclic):
     graph = complex_cyclic
     assert graph.dijkstra('A', 'G') == ['A', 'B', 'C', 'G']
+
+
+def test_bellman_ford_dead_end(shortest_dead_end):
+    graph = shortest_dead_end
+    assert graph.bellman_ford('A', 'B') == ['A', 'C', 'D', 'F', 'B']
+
+
+def test_bellman_ford_wiki_ex(shortest_wiki):
+    graph = shortest_wiki
+    assert graph.bellman_ford('A', 'F') == ['A', 'C', 'E', 'D', 'F']
+
+
+def test_bellman_ford_complex_cyclic(complex_cyclic):
+    graph = complex_cyclic
+    assert graph.bellman_ford('A', 'G') == ['A', 'B', 'C', 'G']
+
+
+def test_bellman_ford_neg_wt(neg_wt):
+    graph = neg_wt
+    assert graph.bellman_ford('A', 'C') == ['A', 'B', 'C']
+
+
+def test_bellman_ford_neg_wt_alt_end(neg_wt):
+    graph = neg_wt
+    assert graph.bellman_ford('A', 'D') == ['A', 'B', 'E', 'D']
+
+
+def test_bellman_ford_neg_cycle():
+    graph = Graph()
+    graph.d = {'A': {'B': 3},
+               'B': {'C': 4, 'D': -2},
+               'C': {},
+               'D': {'E': 1},
+               'E': {'B': -4}}
+    with pytest.raises(Exception):
+        graph.bellman_ford('A', 'C')
