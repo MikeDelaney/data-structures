@@ -16,10 +16,9 @@ class BSTree(object):
                 self.left = BSTree()
             self.left.insert(key)
         else:
-            if self.right == None:
+            if self.right is None:
                 self.right = BSTree()
             self.right.insert(key)
-
 
     def contains(self, key):
         if key == self.key:
@@ -35,7 +34,6 @@ class BSTree(object):
                 return False
             return self.right.contains(key)
 
-
     def size(self):
         left_size = 0
         right_size = 0
@@ -46,7 +44,41 @@ class BSTree(object):
         return 1 + left_size + right_size
 
     def depth(self):
-        pass
+        left_depth = 0
+        right_depth = 0
+        if self.left is not None:
+            left_depth = self.left.depth()
+        if self.right is not None:
+            right_depth = self.right.depth()
+        return 1 + max(left_depth, right_depth)
 
     def balance(self):
-        pass
+        return self.left.size() - self.right.size()
+
+
+if __name__ == '__main__':
+    import time
+    # largest number of recursions we can get
+    num = 996
+    tree = BSTree()
+    for i in range(num):
+        tree.insert(i)
+
+    print
+    print 'Searching in degenerate BST of length {}'.format(num)
+    print
+    print 'Root:'
+
+    # best case
+    start = time.time()
+    tree.contains(1)
+    delta = time.time() - start
+    print "Best case time = {}ns".format(delta * 1000)
+
+    print
+    print 'Leaf:'
+
+    start = time.time()
+    tree.contains(num - 1)
+    delta = time.time() - start
+    print "Worst case time = {}ns".format(delta * 1000)
