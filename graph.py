@@ -71,7 +71,7 @@ class Graph(object):
 
     def dijkstra(self, start, end):
         # Implementation is based on pseudocode from wikipedia
-        # Ugly but works
+        # Kind of ugly but works
         # dist maps node to (distance, previous node)
         dist = {start: (0, None)}
         shortest_path = [end]
@@ -88,9 +88,8 @@ class Graph(object):
             closest_node = None
             for node in nodes:
                 if node in dist:
-                    if closest_node is None:
-                        closest_node = node
-                    elif dist[node][0] < dist[closest_node][0]:
+                    if closest_node is None or dist[node][0] \
+                        < dist[closest_node][0]:
                         closest_node = node
             # Exit condition if there is no closest node
             if closest_node is None:
