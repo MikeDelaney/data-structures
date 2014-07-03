@@ -29,5 +29,20 @@ As singly linked list might be appropriate as the basis of a stack, and a doubly
 
 ##Simple Graph - graph.py
 
-An implementation of a directional graph that has methods to return complete traversals, either depth-first or breadth-first.
+An implementation of a weighted directional graph.
+Has methods for:
+* adding nodes
+* deleting nodes
+* returning a list of nodes
+* returning a list of a node's neighbors
+* determining if nodes are adjacent
+* adding edges
+* returning a list of edges with weights
+* returning complete traversals, either depth-first or breadth-first.
+* determining the shortest path between nodes using either Dijkstra's algorithm or the Bellman-Ford algoritm.
 
+The implementation of Dijkstra's used here works by finding the shortest distance from a start node to every other node in the graph. Initially all distances are assumed to be infinite. The algorithm then determines the actual distances to neighboring nodes and expands outwards in order of closeness. Once all distances are known, the shortest path is determined by backtracking from the end to the start through previous nodes. Dijkstra's is faster than Bellman-Ford, but does not work for graphs with negative weights.
+
+The Bellman-Ford algorithm starts with the same assumptions as Dijkstra's.  Bellman-Ford differs primarily in that it iterates over all of the edges when determining actual distances instead of selecting the closest. Once all of the distances are known, the same backtracking method is used to get the shortest path. The Bellman-Ford algorithm is slower, but works for graphs with negative weights. If negative weight cycles exist, an error is raised.
+
+Based the implementation of both algorithms on their Wikipedia entries and pseudocode. See [Dijkstra's](http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) and [Bellman-Ford](http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) for more information.
