@@ -70,25 +70,14 @@ class Graph(object):
 
     def dijkstra(self, start, end):
         # Implementation is based on pseudocode from wikipedia
-        # Kind of ugly but works
-        # dist maps node to (distance, previous node)
-        dist = {start: (0, None)}
-        shortest_path = [end]
-        # Get list of nodes
-        nodes = self.nodes()
-        # Iterate through nodes, add to dist with infinite distance and
-        # None for previous node
-        for node in nodes:
-            if node != start:
-                dist[node] = (float('inf'), None)
+        dist, prev, nodes = self._algorithm_setup(start)
         # While list of nodes is not empty
         while nodes:
             # Find the node in nodes with the min distance
             closest_node = None
             for node in nodes:
                 if node in dist:
-                    if closest_node is None or dist[node][0] \
-                        < dist[closest_node][0]:
+                    if closest_node is None or dist[node] < dist[closest_node]:
                         closest_node = node
             # Exit condition if there is no closest node
             if closest_node is None:
@@ -98,37 +87,47 @@ class Graph(object):
             # Iterate through neighbors of closest_node
             # Add the node with shortest path to dist
             for neighbor in self.neighbors(closest_node):
-                path_length = dist[closest_node][0] + \
+                path_length = dist[closest_node] + \
                     self.d[closest_node][neighbor]
-                if path_length < dist[neighbor][0]:
-                    dist[neighbor] = (path_length, closest_node)
-        return self._build_shortest_path(end, dist, shortest_path)
+                if path_length < dist[neighbor]:
+                    dist[neighbor] = path_length
+                    prev[neighbor] = closest_node
+        return self._build_shortest_path(end, prev)
 
     def bellman_ford(self, start, end):
-        dist = {start: (0, None)}
-        shortest_path = [end]
+        dist, prev, nodes = self._algorithm_setup(start)
+        # Relax edges
+        for i in xrange(1, len(nodes)):
+            # edge is (start_node, end_node, weight)
+            for edge in self.edges():
+                if dist[edge[0]] + edge[2] < dist[edge[1]]:
+                    dist[edge[1]] = dist[edge[0]] + edge[2]
+                    prev[edge[1]] = edge[0]
+        # Check for negative cycles
+        for edge in self.edges():
+            if dist[edge[0]] + edge[2] < dist[edge[1]]:
+                raise Exception('Graph contains negative weight cycle')
+        return self._build_shortest_path(end, prev)
+
+    def _algorithm_setup(self, start):
+        # dist maps node to distance
+        dist = {start: 0}
+        # prev maps node to previous node
+        prev = {start: None}
         # Get list of nodes
         nodes = self.nodes()
         # Iterate through nodes, add to dist with infinite distance and
         # None for previous node
         for node in nodes:
             if node != start:
-                dist[node] = (float('inf'), None)
-        # Relax edges
-        for i in xrange(1, len(nodes)):
-            # edge is (start_node, end_node, wt)
-            for edge in self.edges():
-                if dist[edge[0]][0] + edge[2] < dist[edge[1]][0]:
-                    dist[edge[1]] = (dist[edge[0]][0] + edge[2], edge[0])
-        # Check for negative cycles
-        for edge in self.edges():
-            if dist[edge[0]][0] + edge[2] < dist[edge[1]][0]:
-                raise Exception('Graph contains negative weight cycle')
-        return self._build_shortest_path(end, dist, shortest_path)
+                dist[node] = float('inf')
+                prev[node] = None
+        return dist, prev, nodes
 
-    def _build_shortest_path(self, end, dist, shortest_path):
+    def _build_shortest_path(self, end, prev):
         # Backtrack from end through previous nodes to get path
-        while dist[end][1] is not None:
-            shortest_path.insert(0, dist[end][1])
-            end = dist[end][1]
+        shortest_path = [end]
+        while prev[end] is not None:
+            shortest_path.insert(0, prev[end])
+            end = prev[end]
         return shortest_path
