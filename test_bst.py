@@ -90,15 +90,33 @@ def test_size():
 
 def test_depth():
     tree = BSTree(4)
-    assert tree.depth == 1
+    assert tree.depth() == 1
     tree.insert(2)
     tree.insert(6)
-    assert tree.depth == 2
+    assert tree.depth() == 2
     tree.insert(1)
     tree.insert(3)
     tree.insert(5)
     tree.insert(7)
-    assert tree.depth == 3
+    assert tree.depth() == 3
+
+
+def test_depth_left_heavy():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(1)
+    tree.insert(3)
+    assert tree.depth() == 3
+
+
+def test_depth_right_heavy():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(5)
+    tree.insert(7)
+    assert tree.depth() == 3
 
 
 def test_balance_balanced():
