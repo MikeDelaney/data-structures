@@ -4,8 +4,8 @@ from bst import BSTree
 def test_init_bstree():
     tree = BSTree(4)
     assert tree.key == 4
-    assert tree.parent == None
-    assert tree.left == None
+    assert tree.root is None
+    assert tree.left is None
     assert tree.right == float('inf')
     assert tree.size() == 1
 
@@ -14,6 +14,7 @@ def test_insert_already_present():
     tree = BSTree(4)
     tree.insert(4)
     assert tree.size() == 1
+
 
 def test_insert():
     tree = BSTree(4)
@@ -50,4 +51,42 @@ def test_size():
 
 
 def test_depth():
-    
+    tree = BSTree(4)
+    assert tree.depth == 1
+    tree.insert(2)
+    tree.insert(6)
+    assert tree.depth == 2
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(5)
+    tree.insert(7)
+    assert tree.depth == 3
+
+
+def test_balance_balanced():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(1)
+    tree.insert(3)
+    tree.insert(5)
+    tree.insert(7)
+    assert tree.balance() == 0
+
+
+def test_balance_left_heavy():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(1)
+    tree.insert(3)
+    assert tree.balance() == 2
+
+
+def test_balance_right_heavy():
+    tree = BSTree(4)
+    tree.insert(2)
+    tree.insert(6)
+    tree.insert(5)
+    tree.insert(7)
+    assert tree.balance() == -2
