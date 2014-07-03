@@ -6,7 +6,7 @@ def test_init_bstree():
     assert tree.key == 4
     assert tree.root is None
     assert tree.left is None
-    assert tree.right == float('inf')
+    assert tree.right == None
     assert tree.size() == 1
 
 
@@ -47,7 +47,7 @@ def test_contains_not_present():
     tree.insert(7)
     tree.insert(8)
     tree.insert(0)
-    assert not tree.contains(56)
+    assert tree.contains(56) is False
 
 
 def test_contains():

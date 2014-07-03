@@ -4,7 +4,7 @@ class BSTree(object):
         self.key = key
         self.root = root
         self.left = None
-        self.right = float('inf')
+        self.right = None
 
     def insert(self, key):
         if key == self.key:
@@ -16,13 +16,34 @@ class BSTree(object):
                 self.left = BSTree()
             self.left.insert(key)
         else:
-            if self.right == float('inf'):
+            if self.right == None:
                 self.right = BSTree()
             self.right.insert(key)
 
 
+    def contains(self, key):
+        if key == self.key:
+            return True
+        elif self.key is None:
+            return False
+        elif key < self.key:
+            if not self.left:
+                return False
+            return self.left.contains(key)
+        else:
+            if not self.right:
+                return False
+            return self.right.contains(key)
+
+
     def size(self):
-        pass
+        left_size = 0
+        right_size = 0
+        if self.left is not None:
+            left_size = self.left.size()
+        if self.right is not None:
+            right_size = self.right.size()
+        return 1 + left_size + right_size
 
     def depth(self):
         pass
