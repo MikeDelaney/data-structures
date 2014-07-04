@@ -11,22 +11,20 @@ class BSTree(object):
     def insert(self, key):
         if key == self.key:
             return
-        elif self.key is None:
+        elif not self.key:
             self.key = key
         elif key < self.key:
-            if self.left is None:
+            if not self.left:
                 self.left = BSTree()
             self.left.insert(key)
         else:
-            if self.right is None:
+            if not self.right:
                 self.right = BSTree()
             self.right.insert(key)
 
     def contains(self, key):
         if key == self.key:
             return True
-        elif self.key is None:
-            return False
         elif key < self.key:
             if not self.left:
                 return False
@@ -38,17 +36,17 @@ class BSTree(object):
 
     def size(self):
         left_size, right_size = 0, 0
-        if self.left is not None:
+        if self.left:
             left_size = self.left.size()
-        if self.right is not None:
+        if self.right:
             right_size = self.right.size()
         return 1 + left_size + right_size
 
     def depth(self):
         left_depth, right_depth = 0, 0
-        if self.left is not None:
+        if self.left:
             left_depth = self.left.depth()
-        if self.right is not None:
+        if self.right:
             right_depth = self.right.depth()
         return 1 + max(left_depth, right_depth)
 
