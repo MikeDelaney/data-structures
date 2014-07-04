@@ -37,8 +37,7 @@ class BSTree(object):
             return self.right.contains(key)
 
     def size(self):
-        left_size = 0
-        right_size = 0
+        left_size, right_size = 0, 0
         if self.left is not None:
             left_size = self.left.size()
         if self.right is not None:
@@ -46,8 +45,7 @@ class BSTree(object):
         return 1 + left_size + right_size
 
     def depth(self):
-        left_depth = 0
-        right_depth = 0
+        left_depth, right_depth = 0, 0
         if self.left is not None:
             left_depth = self.left.depth()
         if self.right is not None:
