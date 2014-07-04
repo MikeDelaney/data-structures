@@ -92,6 +92,7 @@ def test_depth():
     tree = BSTree(4)
     assert tree.depth() == 1
     tree.insert(2)
+    assert tree.depth() == 2
     tree.insert(6)
     assert tree.depth() == 2
     tree.insert(1)
