@@ -46,3 +46,14 @@ The implementation of Dijkstra's used here works by finding the shortest distanc
 The Bellman-Ford algorithm starts with the same assumptions as Dijkstra's.  Bellman-Ford differs primarily in that it iterates over all of the edges when determining actual distances instead of selecting the closest. Once all of the distances are known, the same backtracking method is used to get the shortest path. The Bellman-Ford algorithm is slower, but works for graphs with negative weights. If negative weight cycles exist, an error is raised.
 
 Based the implementation of both algorithms on their Wikipedia entries and pseudocode. See [Dijkstra's](http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) and [Bellman-Ford](http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) for more information.
+
+##Binary Search Tree - bst.py
+
+Class based implementation of a binary search tree with the following methods:
+* insert(val)
+* contains(val)
+* size()
+* depth()
+* balance()
+
+Includes code to produce dot object for graphviz visualization program.
