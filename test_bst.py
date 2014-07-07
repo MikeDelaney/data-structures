@@ -189,10 +189,10 @@ def test_post_order(traverse_ex):
     assert actual == expected
 
 
-def test_level_order(traverse_ex):
+def test_breadth_first(traverse_ex):
     tree = traverse_ex
     actual = []
     expected = [8, 3, 10, 1, 6, 14, 4, 7, 13]
-    for n in tree.level_order():
+    for n in tree.breadth_first():
         actual.append(n)
     assert actual == expected
