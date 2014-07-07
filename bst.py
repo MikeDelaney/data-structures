@@ -1,4 +1,5 @@
 import random
+from queue import Queue, Node
 
 
 class BSTree(object):
@@ -52,6 +53,56 @@ class BSTree(object):
 
     def balance(self):
         return self.left.size() - self.right.size()
+
+    def in_order(self):
+        if self is None:
+            return
+        else:
+            if self.left:
+                for node in self.left.in_order():
+                    yield node
+            yield self.key
+            if self.right:
+                for node in self.right.in_order():
+                    yield node
+
+    def pre_order(self):
+        if self is None:
+            return
+        else:
+            yield self.key
+            if self.left:
+                for node in self.left.pre_order():
+                    yield node
+            if self.right:
+                for node in self.right.pre_order():
+                    yield node
+
+    def post_order(self):
+        if self is None:
+            return
+        else:
+            if self.left:
+                for node in self.left.post_order():
+                    yield node
+            if self.right:
+                for node in self.right.post_order():
+                    yield node
+            yield self.key
+
+    def breadth_first(self):
+        visited = Queue()
+        visited.enqueue(self)
+        while visited:
+            try:
+                node = visited.dequeue()
+            except LookupError:
+                return
+            if node.left:
+                visited.enqueue(node.left)
+            if node.right:
+                visited.enqueue(node.right)
+            yield node.key
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
