@@ -137,7 +137,7 @@ def test_balance_left_heavy():
     tree.insert(6)
     tree.insert(1)
     tree.insert(3)
-    assert tree.balance() == 2
+    assert tree.balance() == 1
 
 
 def test_balance_right_heavy():
@@ -146,4 +146,4 @@ def test_balance_right_heavy():
     tree.insert(6)
     tree.insert(5)
     tree.insert(7)
-    assert tree.balance() == -2
+    assert tree.balance() == -1
