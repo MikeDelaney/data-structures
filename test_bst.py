@@ -141,25 +141,19 @@ def test_depth_right_heavy(right_heavy):
     assert tree.depth() == 3
 
 
-def test_balance_balanced():
-    tree = BSTree(4)
-    tree.insert(2)
-    tree.insert(6)
-    tree.insert(1)
-    tree.insert(3)
-    tree.insert(5)
-    tree.insert(7)
+def test_balance_balanced(perfect_tree):
+    tree = perfect_tree
     assert tree.balance() == 0
 
 
 def test_balance_left_heavy(left_heavy):
     tree = left_heavy
-    assert tree.balance() == 2
+    assert tree.balance() == 1
 
 
 def test_balance_right_heavy(right_heavy):
     tree = right_heavy
-    assert tree.balance() == -2
+    assert tree.balance() == -1
 
 
 def test_in_order(traverse_ex):
