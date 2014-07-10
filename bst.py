@@ -9,15 +9,13 @@ class BSTree(object):
         self.right = None
 
     def insert(self, key):
-        if key == self.key:
-            return
-        elif not self.key:
+        if not self.key:
             self.key = key
         elif key < self.key:
             if not self.left:
                 self.left = BSTree()
             self.left.insert(key)
-        else:
+        elif key > self.key:
             if not self.right:
                 self.right = BSTree()
             self.right.insert(key)
@@ -51,7 +49,7 @@ class BSTree(object):
         return 1 + max(left_depth, right_depth)
 
     def balance(self):
-        return self.left.size() - self.right.size()
+        return self.left.depth() - self.right.depth()
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
