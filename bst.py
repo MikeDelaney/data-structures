@@ -103,24 +103,26 @@ class BSTree(object):
             yield node
 
     def delete(self, value):
-        for node in self.in_order():
-            if node.key == value:
-                children = node._number_children()
+        node_list = [node for node in self.in_order()]
+        for i in xrange(len(node_list)):
+            check = node_list[i]
+            if check.key == value:
+                children = check._number_children()
                 if children == 0:
-                    node._delete_leaf()
+                    check._delete_leaf()
                 elif children == 1:
-                    node._delete_one_child()
+                    check._delete_one_child()
                 else:
-                    node._delete_two_children(value)
+                    check._delete_two_children(i, node_list)
         pass
 
     def _number_children(self):
-        retval = 0
+        count = 0
         if self.left:
-            retval += 1
+            count += 1
         if self.right:
-            retval += 1
-        return retval
+            count += 1
+        return count
 
     def _delete_leaf(self):
         if self.parent.left == self:
@@ -138,8 +140,13 @@ class BSTree(object):
             self.parent.right = self.right
             self.right = None
 
-    def _delete_two_children(self, value):
-        pass
+    def _delete_two_children(self, i, node_list):
+        if self.balance() > 0:
+            self.key = node_list[i-1].key
+            self.left.delete(self.key)
+        else:
+            self.key = node_list[i+1].key
+            self.right.delete(self.key)
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
