@@ -3,9 +3,9 @@ from queue import Queue, Node
 
 
 class BSTree(object):
-    def __init__(self, key=None, root=None):
+    def __init__(self, key=None, parent=None):
         self.key = key
-        self.root = root
+        self.parent = parent
         self.left = None
         self.right = None
 
@@ -14,11 +14,11 @@ class BSTree(object):
             self.key = key
         elif key < self.key:
             if not self.left:
-                self.left = BSTree()
+                self.left = BSTree(None, self)
             self.left.insert(key)
         elif key > self.key:
             if not self.right:
-                self.right = BSTree()
+                self.right = BSTree(None, self)
             self.right.insert(key)
 
     def contains(self, key):
@@ -59,7 +59,7 @@ class BSTree(object):
             if self.left:
                 for node in self.left.in_order():
                     yield node
-            yield self.key
+            yield self
             if self.right:
                 for node in self.right.in_order():
                     yield node
@@ -68,7 +68,7 @@ class BSTree(object):
         if self is None:
             return
         else:
-            yield self.key
+            yield self
             if self.left:
                 for node in self.left.pre_order():
                     yield node
@@ -86,7 +86,7 @@ class BSTree(object):
             if self.right:
                 for node in self.right.post_order():
                     yield node
-            yield self.key
+            yield self
 
     def breadth_first(self):
         visited = Queue()
@@ -100,7 +100,46 @@ class BSTree(object):
                 visited.enqueue(node.left)
             if node.right:
                 visited.enqueue(node.right)
-            yield node.key
+            yield node
+
+    def delete(self, value):
+        for node in self.in_order():
+            if node.key == value:
+                children = node._number_children()
+                if children == 0:
+                    node._delete_leaf()
+                elif children == 1:
+                    node._delete_one_child()
+                else:
+                    node._delete_two_children(value)
+        pass
+
+    def _number_children(self):
+        retval = 0
+        if self.left:
+            retval += 1
+        if self.right:
+            retval += 1
+        return retval
+
+    def _delete_leaf(self):
+        if self.parent.left == self:
+            self.parent.left = None
+        else:
+            self.parent.right = None
+
+    def _delete_one_child(self):
+        if self.left:
+            self.left.parent = self.parent
+            self.parent.left = self.left
+            self.left = None
+        else:
+            self.right.parent = self.parent
+            self.parent.right = self.right
+            self.right = None
+
+    def _delete_two_children(self, value):
+        pass
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
