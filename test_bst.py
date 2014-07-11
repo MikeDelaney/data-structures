@@ -231,5 +231,18 @@ def test_delete_one_child_left(perfect_tree):
     assert actual == expected
 
 
-def test_delete_two_children():
-    assert False
+def test_delete_two_children_root(perfect_tree):
+    tree = perfect_tree
+    tree.delete(4)
+    actual = [n.key for n in tree.in_order()]
+    expected = [1, 2, 3, 5, 6, 7]
+    assert actual == expected
+
+
+def test_delete_two_children_non_root(perfect_tree):
+    tree = perfect_tree
+    tree.delete(2)
+    actual = [n.key for n in tree.in_order()]
+    expected = [1, 3, 4, 5, 6, 7]
+    assert actual == expected
+
