@@ -53,9 +53,7 @@ class BSTree(object):
         return self.left.depth() - self.right.depth()
 
     def in_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             if self.left:
                 for node in self.left.in_order():
                     yield node
@@ -65,9 +63,7 @@ class BSTree(object):
                     yield node
 
     def pre_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             yield self
             if self.left:
                 for node in self.left.pre_order():
@@ -77,9 +73,7 @@ class BSTree(object):
                     yield node
 
     def post_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             if self.left:
                 for node in self.left.post_order():
                     yield node
