@@ -55,6 +55,7 @@ Class based implementation of a binary search tree with the following methods:
 * size()
 * depth()
 * balance()
+* delete()
 * in-order traversal
 * pre-order traversal
 * post-order traversal
@@ -62,4 +63,6 @@ Class based implementation of a binary search tree with the following methods:
 
 Includes code to produce dot object for graphviz visualization program.
 
-Algorithms for traversal based on [this](http://en.wikipedia.org/wiki/Pre-order_traversal) Wikipedia article.
+Sources:
+* [Traversal](http://en.wikipedia.org/wiki/Pre-order_traversal)
+* [Node deletion](http://en.wikipedia.org/wiki/Binary_search_tree#Deletion)
