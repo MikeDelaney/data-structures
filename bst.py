@@ -50,7 +50,12 @@ class BSTree(object):
         return 1 + max(left_depth, right_depth)
 
     def balance(self):
-        return self.left.depth() - self.right.depth()
+        left, right = 0, 0
+        if self.left:
+            left += self.left.depth()
+        if self.right:
+            right += self.right.depth()
+        return left - right
 
     def in_order(self):
         if self is not None:
