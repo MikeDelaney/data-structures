@@ -253,3 +253,25 @@ def test_delete_nonexistent(perfect_tree):
     actual = [n.key for n in tree.in_order()]
     expected = [1, 2, 3, 4, 5, 6, 7]
     assert actual == expected
+
+
+def test_rebalance_rotate_left():
+    tree = BSTree(1)
+    tree.right = BSTree(2, tree)
+    tree.right.right = BSTree(3, tree.right)
+    actual = [n.key for n in tree.in_order()]
+    expected = [1, 2, 3]
+    assert tree.depth() == 2
+    assert tree.balance() == 0
+    assert actual == expected
+
+
+def test_rebalance_rotate_right():
+    tree = BSTree(3)
+    tree.right = BSTree(2, tree)
+    tree.right.right = BSTree(1, tree.right)
+    actual = [n.key for n in tree.in_order()]
+    expected = [1, 2, 3]
+    assert tree.depth() == 2
+    assert tree.balance() == 0
+    assert actual == expected
