@@ -259,6 +259,7 @@ def test_rebalance_rotate_left():
     tree = BSTree(1)
     tree.right = BSTree(2, tree)
     tree.right.right = BSTree(3, tree.right)
+    tree.rebalance()
     actual = [n.key for n in tree.in_order()]
     expected = [1, 2, 3]
     assert tree.depth() == 2
@@ -268,8 +269,9 @@ def test_rebalance_rotate_left():
 
 def test_rebalance_rotate_right():
     tree = BSTree(3)
-    tree.right = BSTree(2, tree)
-    tree.right.right = BSTree(1, tree.right)
+    tree.left = BSTree(2, tree)
+    tree.left.left = BSTree(1, tree.left)
+    tree.rebalance()
     actual = [n.key for n in tree.in_order()]
     expected = [1, 2, 3]
     assert tree.depth() == 2
