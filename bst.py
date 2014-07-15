@@ -1,5 +1,5 @@
 import random
-from queue import Queue, Node
+from queue import Queue
 
 
 class BSTree(object):
@@ -10,16 +10,20 @@ class BSTree(object):
         self.right = None
 
     def insert(self, key):
+        self._insert(key)
+        self.rebalance()
+
+    def _insert(self, key):
         if not self.key:
             self.key = key
         elif key < self.key:
             if not self.left:
                 self.left = BSTree(None, self)
-            self.left.insert(key)
+            self.left._insert(key)
         elif key > self.key:
             if not self.right:
                 self.right = BSTree(None, self)
-            self.right.insert(key)
+            self.right._insert(key)
 
     def contains(self, key):
         if key == self.key:
@@ -50,12 +54,15 @@ class BSTree(object):
         return 1 + max(left_depth, right_depth)
 
     def balance(self):
-        return self.left.depth() - self.right.depth()
+        left, right = 0, 0
+        if self.left:
+            left += self.left.depth()
+        if self.right:
+            right += self.right.depth()
+        return left - right
 
     def in_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             if self.left:
                 for node in self.left.in_order():
                     yield node
@@ -65,9 +72,7 @@ class BSTree(object):
                     yield node
 
     def pre_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             yield self
             if self.left:
                 for node in self.left.pre_order():
@@ -77,9 +82,7 @@ class BSTree(object):
                     yield node
 
     def post_order(self):
-        if self is None:
-            return
-        else:
+        if self is not None:
             if self.left:
                 for node in self.left.post_order():
                     yield node
@@ -103,6 +106,10 @@ class BSTree(object):
             yield node
 
     def delete(self, value):
+        self._delete(value)
+        self.rebalance()
+
+    def _delete(self, value):
         node_list = [node for node in self.in_order()]
         for i in xrange(len(node_list)):
             check = node_list[i]
@@ -143,10 +150,48 @@ class BSTree(object):
     def _delete_two_children(self, i, node_list):
         if self.balance() > 0:
             self.key = node_list[i-1].key
-            self.left.delete(self.key)
+            self.left._delete(self.key)
         else:
             self.key = node_list[i+1].key
-            self.right.delete(self.key)
+            self.right._delete(self.key)
+
+    def rebalance(self):
+        # while self.balance() < -1 or self.balance() > 1:
+        while abs(self.balance()) > 1:
+            # if tree is left-heavy
+            if self.balance() > 1:
+                # check left branch. if right-heavy, rotate branch left
+                if self.left.balance() < 0:
+                    self.left._rotate_left()
+                # rotate tree right
+                self._rotate_right()
+            # if tree is right-heavy
+            if self.balance() < -1:
+                # check right branch. if left-heavy, rotate branch right
+                if self.right.balance() > 0:
+                    self.right._rotate_right()
+                # rotate tree left
+                self._rotate_left()
+
+    def _rotate_left(self):
+        new_left = BSTree(self.key)
+        new_left.left = self.left
+        new_left.right = self.right.left
+        self.key = self.right.key
+        self.right = self.right.right
+        self.left = new_left
+        self.right.parent = self
+        self.left.parent = self
+
+    def _rotate_right(self):
+        new_right = BSTree(self.key)
+        new_right.right = self.right
+        new_right.left = self.left.right
+        self.key = self.left.key
+        self.left = self.left.left
+        self.right = new_right
+        self.right.parent = self
+        self.left.parent = self
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
