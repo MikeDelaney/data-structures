@@ -60,9 +60,11 @@ Class based implementation of a binary search tree with the following methods:
 * pre-order traversal
 * post-order traversal
 * breadth-first traversal
+* AVL rebalancing
 
 Includes code to produce dot object for graphviz visualization program.
 
 Sources:
 * [Traversal](http://en.wikipedia.org/wiki/Pre-order_traversal)
 * [Node deletion](http://en.wikipedia.org/wiki/Binary_search_tree#Deletion)
+* [Balanced Binary Search Trees](http://interactivepython.org/courselib/static/pythonds/Trees/balanced.html)
