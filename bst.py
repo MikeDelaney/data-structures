@@ -1,5 +1,5 @@
 import random
-from queue import Queue, Node
+from queue import Queue
 
 
 class BSTree(object):
