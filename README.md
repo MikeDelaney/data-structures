@@ -68,3 +68,6 @@ Sources:
 * [Traversal](http://en.wikipedia.org/wiki/Pre-order_traversal)
 * [Node deletion](http://en.wikipedia.org/wiki/Binary_search_tree#Deletion)
 * [Balanced Binary Search Trees](http://interactivepython.org/courselib/static/pythonds/Trees/balanced.html)
+
+##Insertion Sort - insertion_sort.py
+Source: [Insertion Sort](http://en.wikipedia.org/wiki/Insertion_sort)
