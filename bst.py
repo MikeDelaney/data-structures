@@ -10,20 +10,20 @@ class BSTree(object):
         self.right = None
 
     def insert(self, key):
-        self._insert(key)
-        self.rebalance()
-
-    def _insert(self, key):
         if not self.key:
             self.key = key
         elif key < self.key:
             if not self.left:
                 self.left = BSTree(None, self)
-            self.left._insert(key)
+            self.left.insert(key)
         elif key > self.key:
             if not self.right:
                 self.right = BSTree(None, self)
-            self.right._insert(key)
+            self.right.insert(key)
+        if self.parent:
+            self.parent.rebalance()
+        else:
+            self.rebalance()
 
     def contains(self, key):
         if key == self.key:
@@ -107,7 +107,10 @@ class BSTree(object):
 
     def delete(self, value):
         self._delete(value)
-        self.rebalance()
+        if self.parent:
+            self.parent.rebalance()
+        else:
+            self.rebalance()
 
     def _delete(self, value):
         node_list = [node for node in self.in_order()]
@@ -180,8 +183,10 @@ class BSTree(object):
         self.key = self.right.key
         self.right = self.right.right
         self.left = new_left
-        self.right.parent = self
-        self.left.parent = self
+        if self.right:
+            self.right.parent = self
+        if self.left:
+            self.left.parent = self
 
     def _rotate_right(self):
         new_right = BSTree(self.key)
@@ -190,8 +195,10 @@ class BSTree(object):
         self.key = self.left.key
         self.left = self.left.left
         self.right = new_right
-        self.right.parent = self
-        self.left.parent = self
+        if self.right:
+            self.right.parent = self
+        if self.left:
+            self.left.parent = self
 
     def get_dot(self):
         """return the tree with root 'self' as a dot graph for visualization"""
