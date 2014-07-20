@@ -106,13 +106,6 @@ class BSTree(object):
             yield node
 
     def delete(self, value):
-        self._delete(value)
-        if self.parent:
-            self.parent.rebalance()
-        else:
-            self.rebalance()
-
-    def _delete(self, value):
         node_list = [node for node in self.in_order()]
         for i in xrange(len(node_list)):
             check = node_list[i]
@@ -124,6 +117,10 @@ class BSTree(object):
                     check._delete_one_child()
                 else:
                     check._delete_two_children(i, node_list)
+                if self.parent:
+                    self.parent.rebalance()
+                else:
+                    self.rebalance()
         pass
 
     def _number_children(self):
@@ -156,7 +153,7 @@ class BSTree(object):
             self.left._delete(self.key)
         else:
             self.key = node_list[i+1].key
-            self.right._delete(self.key)
+            self.right.delete(self.key)
 
     def rebalance(self):
         # while self.balance() < -1 or self.balance() > 1:
