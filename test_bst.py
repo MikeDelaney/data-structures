@@ -37,14 +37,14 @@ def left_heavy():
 @pytest.fixture(scope="function")
 def traverse_ex():
     tree = BSTree(8)
-    tree.insert(3)
-    tree.insert(10)
-    tree.insert(1)
-    tree.insert(6)
-    tree.insert(14)
-    tree.insert(4)
-    tree.insert(7)
-    tree.insert(13)
+    tree.left = BSTree(3, tree)
+    tree.right = BSTree(10, tree)
+    tree.left.left = BSTree(1, tree.left)
+    tree.left.right = BSTree(6, tree.left)
+    tree.right.right = BSTree(14, tree.right)
+    tree.left.right.left = BSTree(4, tree.left.right)
+    tree.left.right.right = BSTree(7, tree.left.right)
+    tree.right.right.left = BSTree(13, tree.right.right)
     return tree
 
 
@@ -260,8 +260,8 @@ def test_rebalance_rotate_left():
     tree.right = BSTree(2, tree)
     tree.right.right = BSTree(3, tree.right)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [2, 1, 3]
     assert tree.depth() == 2
     assert tree.balance() == 0
     assert actual == expected
@@ -272,8 +272,8 @@ def test_rebalance_rotate_right():
     tree.left = BSTree(2, tree)
     tree.left.left = BSTree(1, tree.left)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [2, 1, 3]
     assert tree.depth() == 2
     assert tree.balance() == 0
     assert actual == expected
@@ -288,8 +288,8 @@ def test_rebalance_left_right():
     tree.left.right.left = BSTree(3, tree.left.right)
     tree.left.right.right = BSTree(5, tree.left.right)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
     assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
@@ -304,8 +304,8 @@ def test_rebalance_left_left():
     tree.left.left.left = BSTree(1, tree.left.left)
     tree.left.left.right = BSTree(3, tree.left.left)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
     assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
@@ -320,8 +320,8 @@ def tree_rebalance_right_left():
     tree.right.left.left = BSTree(3, tree.right.left)
     tree.right.left.right = BSTree(5, tree.right.left)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
     assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
@@ -336,8 +336,8 @@ def tree_rebalance_right_right():
     tree.right.right.left = BSTree(5, tree.right.right)
     tree.right.right.right = BSTree(7, tree.right.right)
     tree.rebalance()
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
     assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
@@ -347,9 +347,9 @@ def test_insert_avl_single_right_branch():
     tree = BSTree()
     for i in xrange(1, 8):
         tree.insert(i)
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
-    assert tree.depth() == 4
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
+    assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
 
@@ -358,9 +358,9 @@ def test_insert_avl_single_left_branch():
     tree = BSTree()
     for i in xrange(7, 0, -1):
         tree.insert(i)
-    actual = [n.key for n in tree.in_order()]
-    expected = [1, 2, 3, 4, 5, 6, 7]
-    assert tree.depth() == 4
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [4, 2, 6, 1, 3, 5, 7]
+    assert tree.depth() == 3
     assert tree.balance() == 0
     assert actual == expected
 
@@ -370,8 +370,8 @@ def test_delete_avl(perfect_tree):
     tree.delete(1)
     tree.delete(3)
     tree.delete(2)
-    actual = [n.key for n in tree.in_order()]
-    expected = [4, 5, 6, 7]
+    actual = [n.key for n in tree.breadth_first()]
+    expected = [6, 4, 7, 5]
     assert tree.depth() == 3
     assert tree.balance() == 1
     assert actual == expected
