@@ -5,7 +5,10 @@ class HashTable(object):
         self.buckets = [[] for i in xrange(size)]
 
     def hash(self, key):
-        pass
+        hashval = 0
+        for letter in key:
+            hashval += ord(letter)
+        return hashval % self.size
 
     def set(self, key, value):
         pass
