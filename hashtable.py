@@ -11,7 +11,9 @@ class HashTable(object):
         return hashval % self.size
 
     def set(self, key, value):
-        pass
+        if type(key) is not str:
+            raise TypeError
+        self.buckets[self.hash(key)].append((key, value))
 
     def get(self, key):
         pass
