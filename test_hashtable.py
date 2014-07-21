@@ -48,7 +48,7 @@ def test_get_simple():
 def test_get_complete():
     hash_table = HashTable(1024)
     word_list = []
-    with open('/usr/share/dict/words') as f:
+    with open('words') as f:
         for line in f:
             word = line.rstrip()
             word_list.append(word)
