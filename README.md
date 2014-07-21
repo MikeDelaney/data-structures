@@ -69,6 +69,14 @@ Sources:
 * [Node deletion](http://en.wikipedia.org/wiki/Binary_search_tree#Deletion)
 * [Balanced Binary Search Trees](http://interactivepython.org/courselib/static/pythonds/Trees/balanced.html)
 
+
+##Hash Table - hashtable.py
+Simple hash table implementation with the following methods:
+* hash(key)
+* set(key, value) - raises TypeError if key is not a string
+* get(value) - raises KeyError if key is not in table
+Source: [Hash Table](http://en.wikipedia.org/wiki/Hash_table)
+
 ##Insertion Sort - insertion_sort.py
 Source: [Insertion Sort](http://en.wikipedia.org/wiki/Insertion_sort)
 
