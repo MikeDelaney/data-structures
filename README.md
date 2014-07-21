@@ -17,9 +17,9 @@ Sample code for a number of classic data structures.
 
 ##Doubly linked list - dll.py
 Used http://python.dzone.com/articles/algorithm-week-linked-list as a guide for simplifying code in remove function.
-Got an idea for a doubly linked list use case from https://community.oracle.com/message/10431517#10431517
 
-As singly linked list might be appropriate as the basis of a stack, and a doubly linked list might be useful to keep a record of commands for undo/redo.
+Got an idea for a doubly linked list use case from https://community.oracle.com/message/10431517#10431517
+A singly linked list might be appropriate as the basis of a stack, and a doubly linked list might be useful to keep a record of commands for undo/redo.
 
 ##Binary Heap - binheap.py
 
@@ -80,7 +80,7 @@ Source: [Hash Table](http://en.wikipedia.org/wiki/Hash_table)
 ##Insertion Sort - insertion_sort.py
 Source: [Insertion Sort](http://en.wikipedia.org/wiki/Insertion_sort)
 
-##Merge Sort - merge_sort,py
+##Merge Sort - merge_sort.py
 Source: [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort)
 
 ##Quicksort - quicksort.py
