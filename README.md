@@ -74,3 +74,6 @@ Source: [Insertion Sort](http://en.wikipedia.org/wiki/Insertion_sort)
 
 ##Merge Sort - merge_sort,py
 Source: [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort)
+
+##Quicksort - quicksort.py
+Source: [Quicksort](http://en.wikipedia.org/wiki/Quicksort)
