@@ -16,4 +16,7 @@ class HashTable(object):
         self.buckets[self.hash(key)].append((key, value))
 
     def get(self, key):
-        pass
+        for kv_pair in self.buckets[self.hash(key)]:
+            if key == kv_pair[0]:
+                return kv_pair[1]
+        raise KeyError
