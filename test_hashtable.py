@@ -26,7 +26,7 @@ def test_set_invalid_type():
 def test_set():
     hash_table = HashTable(1024)
     hash_table.set('pig', 'pig')
-    assert hash_table.buckets[320] == ('pig', 'pig')
+    assert hash_table.buckets[320][0] == ('pig', 'pig')
 
 
 def test_get_missing_key():
