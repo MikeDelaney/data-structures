@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from binheap import Binheap
+from binary_heap.binheap import Binheap
 
 
 class Item(object):
